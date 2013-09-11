@@ -41,5 +41,5 @@ nosetests.xml
 *.pyc
 
 # Linux temp files #
-###################
+####################
 *~
