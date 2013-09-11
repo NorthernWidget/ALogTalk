@@ -33,3 +33,13 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+
+# Added by ADW
+
+# Compiled
+*.pyc
+
+# Linux temp files #
+###################
+*~
