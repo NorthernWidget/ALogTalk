@@ -27,6 +27,7 @@ andy@northernwidget.com
 """
 
 import usbserial
+import sys
 
 print ""
 print "************************************************************"
@@ -49,7 +50,17 @@ print "                             0000000000    "
 print "" 
 
 
-usbser = usbserial.usbserial()
+try:
+  baud = sys.argv[1]
+except:
+  baud=14400
+
+if baud:
+  usbser = usbserial.usbserial(baud)
+
+print "      Connecting to logger at", baud, "bits per second"
+print "" 
+
 print "*** HIT LOGGER RESET BUTTON TO ENTER SETUP (IF NOT ENTERED AUTOMATICALY) ***"
 print ">> If this program gets out of sync with the logger, it may crash or behave <<"
 print ">>   nonsensically. In this case, restart the logger and/or this program    <<"

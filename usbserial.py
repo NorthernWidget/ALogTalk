@@ -46,14 +46,14 @@ class usbserial(object):
   abstract/generalize/limit this as much as possible
   """
 
-  def __init__(self):
+  def __init__(self, baud):
     self.port = None # Default to this
     self.logger_name = None
     # Instantiate serial connection as part of this
     self.scan()
     if self.port:
       print "Created Serial object for communications"
-      self.ser = self.serial.Serial(self.port, 57600, timeout=1)
+      self.ser = self.serial.Serial(self.port, baud, timeout=1)
     else:
       sys.exit("Logger does not seem to be connected. Exiting.")
 
