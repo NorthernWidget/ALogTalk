@@ -26,6 +26,7 @@ andy@northernwidget.com
 
 import glob
 import sys
+import datetime
 from datetime import datetime as dt # I know Serial has "time", but my code is written for this separately
 import socket
 import re
@@ -197,9 +198,11 @@ class usbserial(object):
     else:
       self.scan()
 
-    # Get UTC time
-    now = dt.utcnow()
+    # Get UTC time -- add a bit to account for latency
+    now = dt.utcnow() + datetime.timedelta(seconds=1)
     now = dt.timetuple(now)
+    
+    print "***", now
 
     # Get numbers and make strings
     # Year
@@ -212,12 +215,16 @@ class usbserial(object):
     minute = "%02d"%(now[4])
     second = "%02d"%(now[5])
 
+    #print "***", dt.now()
+
     # Combine into date setting string to send
     time = year + month + day + day_of_week + hour + minute + second + 'x'
 
     # And send it to set the time
     self.ser.write(time)
     
+    #print "***", dt.now()
+
     # And print some human-readable output
     self.name()
     print time + ' sent'
