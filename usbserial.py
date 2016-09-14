@@ -41,7 +41,7 @@ class usbserial(object):
   """
   Made to work with the data loggers designed by Andy Wickert
   
-  Hard-coded for 57600 baud rate (easy to change this)
+  Hard-coded for 38400 baud rate (easy to change this)
   
   There will be some dependancy on the code on the loggers, but I will try to 
   abstract/generalize/limit this as much as possible

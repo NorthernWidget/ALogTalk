@@ -53,7 +53,7 @@ print ""
 try:
   baud = sys.argv[1]
 except:
-  baud=57600
+  baud=38400
 
 if baud:
   usbser = usbserial.usbserial(baud)
