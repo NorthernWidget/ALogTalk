@@ -57,7 +57,8 @@ except:
   baud=38400
 
 if baud:
-  usbser = usbserial.usbserial(baud)
+  # Create USBserial object
+  usbser = usbserial.USBserial(baud)
 
   print "      Connecting to logger at", baud, "bits per second"
   print "" 
@@ -66,7 +67,7 @@ if baud:
   print ">> If this program gets out of sync with the logger, it may crash or behave <<"
   print ">>   nonsensically. In this case, restart the logger and/or this program    <<"
 
-  time.sleep(0.5)
+  time.sleep(0)
 
   print "Sending time stamp."
 
@@ -77,3 +78,4 @@ if baud:
     
     if len(line) > 0:
       print line
+

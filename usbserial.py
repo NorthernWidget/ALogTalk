@@ -34,20 +34,18 @@ import time
 from select import select
 import random
 
-class usbserial(object):
+class USBserial(object):
   import serial # Keep serial objects inside self
                 # THIS IS THE ONLY NON-STANDARD LIBRARY NEEDED
 
   """
-  Made to work with the data loggers designed by Andy Wickert
+  Made to work with the data loggers designed by Andy Wickert and Chad Sandell
   
-  Hard-coded for 38400 baud rate (easy to change this)
-  
-  There will be some dependancy on the code on the loggers, but I will try to 
-  abstract/generalize/limit this as much as possible
+  "delay" is the number of seconds to wait before executing, to ensure
+  that the ALog is ready to receive and send data.
   """
 
-  def __init__(self, baud):
+  def __init__(self, baud=38400, delay=1.5):
     self.port = None # Default to this
     self.logger_name = None
     # Instantiate serial connection as part of this
@@ -57,6 +55,7 @@ class usbserial(object):
       self.ser = self.serial.Serial(self.port, baud, timeout=1)
     else:
       sys.exit("Logger does not seem to be connected. Exiting.")
+    time.sleep(delay)
 
   def scan(self, mode="Automatic"):
     """
@@ -121,7 +120,7 @@ class usbserial(object):
     #    while port_acquired == 0 and portnum < 20:
       else:
         unrecognized_OS()
-        
+                
   def findUSB(self, portloc):
 
     portseek = glob.glob(portloc) # Hope there's only one that comes up for this!
@@ -200,20 +199,19 @@ class usbserial(object):
 
     # Get UTC time -- add a bit to account for latency
     now = dt.utcnow() + datetime.timedelta(seconds=1)
-    now = dt.timetuple(now)
     
     print "***", now
 
     # Get numbers and make strings
     # Year
     # MUST FORMAT STRINGS TO BE ZERO-PADDED
-    year = "%02d"%(now[0]-2000) # get last 2 digits; will work until 2100
-    month = "%02d"%(now[1])
-    day = "%02d"%(now[2])
-    day_of_week = str(now[6]+1) # 0--6 --> 1--7, where 1=Monday--7=Sunday
-    hour = "%02d"%(now[3])
-    minute = "%02d"%(now[4])
-    second = "%02d"%(now[5])
+    year = "%02d"%(now.year-2000) # get last 2 digits; will work until 2100
+    month = "%02d"%(now.month)
+    day = "%02d"%(now.day)
+    day_of_week = str(now.weekday()+1) # 0--6 --> 1--7, where 1=Monday--7=Sunday
+    hour = "%02d"%(now.hour)
+    minute = "%02d"%(now.minute)
+    second = "%02d"%(now.second)
 
     #print "***", dt.now()
 
