@@ -28,7 +28,6 @@ andy@northernwidget.com
 
 import usbserial
 import sys
-import time
 
 print ""
 print "*************************************************************"
@@ -66,8 +65,6 @@ if baud:
   print "*** HIT LOGGER RESET BUTTON TO ENTER SETUP (IF NOT ENTERED AUTOMATICALY) ***"
   print ">> If this program gets out of sync with the logger, it may crash or behave <<"
   print ">>   nonsensically. In this case, restart the logger and/or this program    <<"
-
-  time.sleep(0)
 
   print "Sending time stamp."
 
