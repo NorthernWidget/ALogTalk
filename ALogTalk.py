@@ -30,9 +30,9 @@ import usbserial
 import sys
 
 print ""
-print "************************************************************"
-print "************ WELCOME TO ANDY'S LOGGER SOFTWARE! ************"
-print "************************************************************"
+print "*************************************************************"
+print "***************** CLOCK SETTING FOR THE ALOG ****************"
+print "*************************************************************"
 print ""
 print "                       00000000000         " 
 print "                     000         000       " 
@@ -67,6 +67,13 @@ print ">>   nonsensically. In this case, restart the logger and/or this program 
 
 line = None
 while True:
+  # Handshake
+  print "Searching for ALog..."
+  char = usb.ser.read()
+  while char != 'A':
+    char = usb.ser.read()
+  print "ALog found."
+  # Main code
   line = usbser.ser.readline()
   if line:
     if line[-2:] == '\r\n':
@@ -74,6 +81,4 @@ while True:
     else:
       print line
     usbser.key_lines(line) # Check and respond if a key line is seen
-
-
 
