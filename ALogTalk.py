@@ -28,11 +28,12 @@ andy@northernwidget.com
 
 import usbserial
 import sys
+import time
 
 print ""
-print "************************************************************"
-print "************ WELCOME TO ANDY'S LOGGER SOFTWARE! ************"
-print "************************************************************"
+print "*************************************************************"
+print "***************** CLOCK SETTING FOR THE ALOG ****************"
+print "*************************************************************"
 print ""
 print "                       00000000000         " 
 print "                     000         000       " 
@@ -55,9 +56,6 @@ try:
 except:
   baud=38400
 
-if baud:
-  usbser = usbserial.usbserial(baud)
-
 print "      Connecting to logger at", baud, "bits per second"
 print "" 
 
@@ -65,15 +63,34 @@ print "*** HIT LOGGER RESET BUTTON TO ENTER SETUP (IF NOT ENTERED AUTOMATICALY) 
 print ">> If this program gets out of sync with the logger, it may crash or behave <<"
 print ">>   nonsensically. In this case, restart the logger and/or this program    <<"
 
-line = None
-while True:
-  line = usbser.ser.readline()
-  if line:
-    if line[-2:] == '\r\n':
-      print line[:-1] # Don't double-return
+if baud:
+  usbser = usbserial.USBserial(baud)
+
+  # Handshake
+  print "Searching for ALog..."
+  #char = '    '
+  #while char[-4:] != 'ALog':
+  while True:
+    usbser.ser.write('A') # Call to the ALog!
+    line = usbser.ser.readline()
+    if line[:4] == 'ALog':
+      print "ALog found."
+      break
     else:
       print line
-    usbser.key_lines(line) # Check and respond if a key line is seen
+      #time.sleep(0.3)
+      #line = usbser.ser.readline()
+      #char += usbser.ser.read()
+      #print char[-1],
 
-
+  # Main code
+  line = None
+  while True:
+    line = usbser.ser.readline()
+    if line:
+      if line[-2:] == '\r\n':
+        print line[:-1] # Don't double-return
+      else:
+        print line
+      usbser.key_lines(line) # Check and respond if a key line is seen
 

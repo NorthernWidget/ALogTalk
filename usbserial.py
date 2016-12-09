@@ -197,8 +197,10 @@ class USBserial(object):
     else:
       self.scan()
 
-    # Get UTC time -- add a bit to account for latency
-    now = dt.utcnow() + datetime.timedelta(seconds=1)
+    # Get UTC time; no need to adjust for latency
+    # (wrapper time_set function will only run this on just about the
+    #  second exactly)
+    now = dt.utcnow()# + datetime.timedelta(seconds=1)
     
     print "***", now
 
@@ -253,7 +255,6 @@ class USBserial(object):
       self.ser.write("p")
     elif line.startswith("Current UNIX time stamp according to logger is") or line.startswith("UNIX TIME STAMP ON MY WATCH IS:"):
       # Get and print human-readable time
-      time.sleep(2)
       print line
       line2 = line[:-2] # rmv \r\n
       #try:
@@ -297,7 +298,7 @@ class USBserial(object):
   def choose_to_set_clock(self):
     time.sleep(1.5)
     self.name()
-    print ("Defaulting Y to in 10 seconds...")
+    #print ("Defaulting Y to in 10 seconds...")
     self.clock_set_choice = None
     while self.clock_set_choice != 'y' and self.clock_set_choice != 'Y' and self.clock_set_choice != 'n' and self.clock_set_choice != 'N':
       self.name();
@@ -398,6 +399,9 @@ class USBserial(object):
     self.name()
     print("more than a couple seconds.");
     time.sleep(1.5)
+    # Don't start until we're at the top of the minute
+    while dt.utcnow().microsecond != 0:
+      pass
     self.DS3231_set()
     print self.ser.readline()
     print "External device time  |  Computer time              " 
