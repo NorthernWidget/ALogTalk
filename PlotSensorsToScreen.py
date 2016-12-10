@@ -42,7 +42,6 @@ if baud:
     ax.xaxis_date()
     ax.xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%H:%M:%S'))
   fig.autofmt_xdate()
-  fig.tight_layout()
     
   while(True):
     if dt.now() > (end - datetime.timedelta(minutes=0.1)):
@@ -76,17 +75,17 @@ if baud:
       ax2.plot(t, T_degC, 'ko-')
       ax2.set_ylabel('Temperature [degrees C]', fontsize=16)
 
-      distance_mm = line_array[3]/1000.
-      distance_mm_error = line_array[4]/1000.
+      distance_m = line_array[3]/1000.
+      distance_m_error = line_array[4]/1000.
       ax3.set_ylim(0, 5)
-      ax3.errorbar(t, distance_mm, yerr=distance_mm_error, fmt='ko-')
+      ax3.errorbar(t, distance_m, yerr=distance_m_error, fmt='ko-')
       ax3.set_ylabel('Distance [m]', fontsize=16)
 
       force_sensor_analog = line_array[5]
       ax4.plot(t, force_sensor_analog, 'ko-')
       ax4.set_ylabel('Force Sensor Analog Reading [ADC value]', fontsize=16)
 
-      pressure_mm_H2O = line_array[6] * 6894.76 / 9800
+      pressure_mm_H2O = line_array[6] * 6894.76 / 9.800# - P_kPa*1000./9.800
       ax5.plot(t, pressure_mm_H2O, 'ko-')
       ax5.set_ylabel('Pressure [mm water]', fontsize=16)
       
@@ -97,6 +96,7 @@ if baud:
       ax4.set_ylabel('Wind Speed [m/s]', fontsize=16)
       """
 
+      fig.tight_layout()
       fig.canvas.draw()
       
 
