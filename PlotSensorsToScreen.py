@@ -37,7 +37,7 @@ if baud:
 
   for ax in [ax1, ax2, ax3, ax4, ax5]:
     start = dt.now()-datetime.timedelta(minutes=0)
-    end = dt.now()+datetime.timedelta(minutes=2)
+    end = dt.now()+datetime.timedelta(minutes=1)
     ax.set_xlim(start, end)
     ax.xaxis_date()
     ax.xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%H:%M:%S'))
@@ -45,9 +45,9 @@ if baud:
     
   while(True):
     if dt.now() > (end - datetime.timedelta(minutes=0.1)):
+      start += datetime.timedelta(minutes=0.5)
+      end += datetime.timedelta(minutes=0.5)
       for ax in [ax1, ax2, ax3, ax4, ax5]:
-        start += datetime.timedelta(minutes=1)
-        end += datetime.timedelta(minutes=1)
         ax.set_xlim(start, end)
         ax.xaxis_date()
     #line = ''
@@ -66,7 +66,7 @@ if baud:
       t = dt.fromtimestamp(line_array[0])
 
       P_kPa = line_array[1]/10.
-      ax1.set_ylim(99, 102)
+      ax1.set_ylim(95, 105)
       ax1.plot(t, P_kPa, 'ko-')
       ax1.set_ylabel('Pressure [kPa]', fontsize=16)
       
