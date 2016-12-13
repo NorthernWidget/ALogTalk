@@ -7,7 +7,7 @@ import numpy as np
 import datetime
 from datetime import datetime as dt
 import matplotlib
-matplotlib.use('GTKAgg')
+#matplotlib.use('GTKAgg')
 from matplotlib import pyplot as plt
 import time
 
@@ -36,8 +36,8 @@ if baud:
   #plt.tight_layout()
 
   for ax in [ax1, ax2, ax3, ax4, ax5]:
-    start = dt.now()-datetime.timedelta(minutes=1)
-    end = dt.now()+datetime.timedelta(minutes=1)
+    start = dt.now()-datetime.timedelta(minutes=0)
+    end = dt.now()+datetime.timedelta(minutes=2)
     ax.set_xlim(start, end)
     ax.xaxis_date()
     ax.xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%H:%M:%S'))
@@ -46,8 +46,8 @@ if baud:
   while(True):
     if dt.now() > (end - datetime.timedelta(minutes=0.1)):
       for ax in [ax1, ax2, ax3, ax4, ax5]:
-        start = dt.now()-datetime.timedelta(minutes=1)
-        end = dt.now()+datetime.timedelta(minutes=1)
+        start += datetime.timedelta(minutes=1)
+        end += datetime.timedelta(minutes=1)
         ax.set_xlim(start, end)
         ax.xaxis_date()
     #line = ''
