@@ -1,8 +1,10 @@
 #! /usr/bin/python
 
 """
-SimpleTimeSend.py: sets the clock based on the set_echo script in the DS3231 library.
-Written for the ALog series of Arduino-based data loggers developed by Andrew D. Wickert
+SimpleClockSet.py: Connects with the "set_echo" example script in the 
+                   Northern Widget DS3231 RTC library to set the RTC.
+                   Written for the ALog series of Arduino-based data loggers
+                   developed by Andrew D. Wickert and Chad T. Sandell.
 
 Copyright (C) 2016, Andrew D. Wickert
 
@@ -30,9 +32,9 @@ import usbserial
 import sys
 
 print ""
-print "*************************************************************"
-print "*********** WELCOME TO Simple Time Set for ALog! ************"
-print "*************************************************************"
+print "**************************************************************"
+print "*********** WELCOME TO Simple Clock Set for ALog! ************"
+print "**************************************************************"
 print ""
 print "                       00000000000         " 
 print "                     000         000       " 
