@@ -1,10 +1,12 @@
 #! /usr/bin/python
 
 """
-ALogTalk.py: interactive front-end to usbserial.py for interaction and clock-setting 
-with the ALog series of Arduino-based data loggers developed by Andrew D. Wickert
+ALogClockSet.py: interactive front-end to usbserial.py to set the clock and
+                 read incoming serial data with the ALog series of
+                 Arduino-based data loggers developed by Andrew D. Wickert
+                 and Chad T. Sandell
 
-Copyright (C) 2012-2013, Andrew D. Wickert and Northern Widget LLC
+Copyright (C) 2012-2016, Andrew D. Wickert and Northern Widget LLC
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
