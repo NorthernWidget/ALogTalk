@@ -1,8 +1,8 @@
 #! /usr/bin/python
 
 """
-SimpleClockSet.py: Connects with the "set_echo" example script in the 
-                   Northern Widget DS3231 RTC library to set the RTC.
+SimpleClockSet.py: Connects with the "ALog_DS3231_set_echo" example script in
+		   the Northern Widget DS3231 RTC library to set the RTC.
                    Written for the ALog series of Arduino-based data loggers
                    developed by Andrew D. Wickert and Chad T. Sandell.
 
