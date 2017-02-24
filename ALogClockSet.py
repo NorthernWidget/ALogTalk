@@ -32,25 +32,25 @@ import usbserial
 import sys
 import time
 
-print ""
-print "*************************************************************"
-print "***************** CLOCK SETTING FOR THE ALOG ****************"
-print "*************************************************************"
-print ""
-print "                       00000000000         " 
-print "                     000         000       " 
-print "                    00   _         00      " 
-print "                   0    /            0     " 
-print "                   \   /|             \    " 
-print "                    \  | \__           \   " 
-print "                     \  \__  0000000000 \  " 
-print "                      \    000        000  " 
-print "                       \ 000   ------   000" 
-print "                        000   | ALOG |  000" 
-print "                         000   ------   000" 
-print "                           000        000  " 
-print "                             0000000000    " 
-print "" 
+print("")
+print("**************************************************************")
+print("*********** WELCOME TO Simple Clock Set for ALog! ************")
+print("**************************************************************")
+print("")
+print("                       00000000000         ")
+print("                     000         000       ")
+print("                    00   _         00      ")
+print("                   0    /            0     ")
+print("                   \   /|             \    ")
+print("                    \  | \__           \   ")
+print("                     \  \__  0000000000 \  ")
+print("                      \    000        000  ")
+print("                       \ 000   ------   000")
+print("                        000   | ALOG |  000")
+print("                         000   ------   000")
+print("                           000        000  ")
+print("                             0000000000    ")
+print("")
 
 
 try:
@@ -58,28 +58,28 @@ try:
 except:
   baud=38400
 
-print "      Connecting to logger at", baud, "bits per second"
-print "" 
+print("      Connecting to logger at", baud, "bits per second")
+print("")
 
-print "*** HIT LOGGER RESET BUTTON TO ENTER SETUP (IF NOT ENTERED AUTOMATICALY) ***"
-print ">> If this program gets out of sync with the logger, it may crash or behave <<"
-print ">>   nonsensically. In this case, restart the logger and/or this program    <<"
+print("*** HIT LOGGER RESET BUTTON TO ENTER SETUP (IF NOT ENTERED AUTOMATICALY) ***")
+print(">> If this program gets out of sync with the logger, it may crash or behave <<")
+print(">>   nonsensically. In this case, restart the logger and/or this program    <<")
 
 if baud:
   usbser = usbserial.USBserial(baud)
 
   # Handshake
-  print "Searching for ALog..."
+  print("Searching for ALog...")
   #char = '    '
   #while char[-4:] != 'ALog':
   while True:
     usbser.ser.write('A') # Call to the ALog!
     line = usbser.ser.readline()
     if line[:4] == 'ALog':
-      print "ALog found."
+      print("ALog found.")
       break
     else:
-      print line
+      print(line)
       #time.sleep(0.3)
       #line = usbser.ser.readline()
       #char += usbser.ser.read()
@@ -91,8 +91,8 @@ if baud:
     line = usbser.ser.readline()
     if line:
       if line[-2:] == '\r\n':
-        print line[:-1] # Don't double-return
+        print(line[:-1]) # Don't double-return
       else:
-        print line
+        print(line)
       usbser.key_lines(line) # Check and respond if a key line is seen
 

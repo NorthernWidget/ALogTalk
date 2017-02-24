@@ -31,25 +31,25 @@ andy@northernwidget.com
 import usbserial
 import sys
 
-print ""
-print "**************************************************************"
-print "*********** WELCOME TO Simple Clock Set for ALog! ************"
-print "**************************************************************"
-print ""
-print "                       00000000000         " 
-print "                     000         000       " 
-print "                    00   _         00      " 
-print "                   0    /            0     " 
-print "                   \   /|             \    " 
-print "                    \  | \__           \   " 
-print "                     \  \__  0000000000 \  " 
-print "                      \    000        000  " 
-print "                       \ 000   ------   000" 
-print "                        000   | ALOG |  000" 
-print "                         000   ------   000" 
-print "                           000        000  " 
-print "                             0000000000    " 
-print "" 
+print("")
+print("**************************************************************")
+print("*********** WELCOME TO Simple Clock Set for ALog! ************")
+print("**************************************************************")
+print("")
+print("                       00000000000         ")
+print("                     000         000       ")
+print("                    00   _         00      ")
+print("                   0    /            0     ")
+print("                   \   /|             \    ")
+print("                    \  | \__           \   ")
+print("                     \  \__  0000000000 \  ")
+print("                      \    000        000  ")
+print("                       \ 000   ------   000")
+print("                        000   | ALOG |  000")
+print("                         000   ------   000")
+print("                           000        000  ")
+print("                             0000000000    ")
+print("")
 
 
 try:
@@ -61,14 +61,14 @@ if baud:
   # Create USBserial object
   usbser = usbserial.USBserial(baud)
 
-  print "      Connecting to logger at", baud, "bits per second"
-  print "" 
+  print("      Connecting to logger at", baud, "bits per second")
+  print("")
 
-  print "*** HIT LOGGER RESET BUTTON TO ENTER SETUP (IF NOT ENTERED AUTOMATICALY) ***"
-  print ">> If this program gets out of sync with the logger, it may crash or behave <<"
-  print ">>   nonsensically. In this case, restart the logger and/or this program    <<"
+  print("*** HIT LOGGER RESET BUTTON TO ENTER SETUP (IF NOT ENTERED AUTOMATICALY) ***")
+  print(">> If this program gets out of sync with the logger, it may crash or behave <<")
+  print(">>   nonsensically. In this case, restart the logger and/or this program    <<")
 
-  print "Sending time stamp."
+  print("Sending time stamp.")
 
   usbser.DS3231_set()
 
@@ -76,5 +76,5 @@ if baud:
     line = usbser.ser.readline()
     
     if len(line) > 0:
-      print line
+      print(line)
 

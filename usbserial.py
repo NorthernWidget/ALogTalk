@@ -51,7 +51,7 @@ class USBserial(object):
     # Instantiate serial connection as part of this
     self.scan()
     if self.port:
-      print "Created Serial object for communications"
+      print("Created Serial object for communications")
       self.ser = self.serial.Serial(self.port, baud, timeout=1)
     else:
       sys.exit("Logger does not seem to be connected. Exiting.")
@@ -81,13 +81,13 @@ class USBserial(object):
 
     if mode == "manual" or mode == "Manual" or mode == "M" or mode == "m":
       # Should be uncommon, but have an option to choose to do it manually
-      print "Manual mode selected"
+      print("Manual mode selected")
       self.port = self.manual_port_define()
     else:
       # Linux
       if sys.platform[:5] == 'linux': # let's just check first 5, since this should still work if Linux goes up from 2.X... I hope
         #print "Rock on, geek! You're using Linux."
-        print "OS = Linux :)"
+        print("OS = Linux :)")
         # First scan for FTDI, then scan for ATmel/ACM
         self.portlocs = ['/dev/ttyUSB*', '/dev/ttyACM*']
         for portloc in self.portlocs:
@@ -97,7 +97,7 @@ class USBserial(object):
             break
       # Mac
       elif sys.platform == 'darwin':
-        print "You're using a Mac! Starving artist with a sense of style?"
+        print("You're using a Mac! Starving artist with a sense of style?")
         # Try cu first, calling unit supposed to be better
         self.portlocs = ['/dev/cu.usbserial*', '/dev/tty.usbserial*']
         for portloc in self.portlocs:
@@ -107,9 +107,9 @@ class USBserial(object):
             break
       elif sys.platform[:3] == 'win': 
         #print "You're using Windows."
-        print "You're using Windows.\nWait, you got this working on Windows? Excellent! Tell me how!"
-        print "Automatic serial port selection doesn't work as easily in Windows,\n\
-              so it hasn't been implemented - sorry!"
+        print("You're using Windows.")#\nWait, you got this working on Windows? Excellent! Tell me how!"
+        print("Automatic serial port selection doesn't work as easily in Windows,\n\
+              so it hasn't been implemented - sorry!")
         self.manual_port_define()
     # Check http://stackoverflow.com/questions/1205383/listing-serial-com-ports-on-windows
     # for how to do this better in Windows
@@ -126,31 +126,31 @@ class USBserial(object):
     portseek = glob.glob(portloc) # Hope there's only one that comes up for this!
 
     if len(portseek) > 1: # Error message & quit if 2+ ports found. If this happens, may have to do manually
-      print 'portseek: >1 USB serial port (' + portloc + ') found'
-      print 'ports found:', portseek
-      print 'Can not tell where to write data. Manual selection required.'
+      print('portseek: >1 USB serial port (' + portloc + ') found')
+      print('ports found:', portseek)
+      print('Can not tell where to write data. Manual selection required.')
       self.manual_port_define()
     elif len(portseek) == 0: # Error message & quit if no ports are found.
-      print 'No USB serial ports (' + portloc + ') found.'
+      print('No USB serial ports (' + portloc + ') found.')
       if portloc == self.portlocs[-1]:
-        print ""
-        print "No additional locations to automatically search for ports."
-        print "(ttyUSB* = FTDI; ttyACM* = Arduino UNO ATmel USB/Serial.)"
-        print 'Can not tell where to write data. Manual selection required.'
+        print("")
+        print("No additional locations to automatically search for ports.")
+        print("(ttyUSB* = FTDI; ttyACM* = Arduino UNO ATmel USB/Serial.)")
+        print('Can not tell where to write data. Manual selection required.')
         self.manual_port_define()
       else:
-        print "Trying next USB/Serial mount location..."
+        print("Trying next USB/Serial mount location...")
     else:
-      print "Serial port acquired:",
-      print portseek[0]
+      print("Serial port acquired:",)
+      print(portseek[0])
       self.port = portseek[0]
 
 
   def manual_port_define(self):
 
-    print ""
-    print 'Follow the instructions to manually set  the port, or type "q" to quit.'
-    print ""
+    print("")
+    print('Follow the instructions to manually set  the port, or type "q" to quit.')
+    print("")
     if sys.platform[:3] == 'win':
       portnum = raw_input('Please type the COM port number (e.g., "3" for COM3) to which the\n\
                            Arduino-based device is attached.\n>>>COM: ')
@@ -162,10 +162,10 @@ class USBserial(object):
       sys.exit("\n\t>>> Could not find communications port. Ta ta!. <<<\n")
 
   def unrecognized_OS(self):
-    print 'Sorry! Your operating system is not recognized. We search for\n\
+    print('Sorry! Your operating system is not recognized. We search for\n\
            serial ports on Linux (linux*), Mac (darwin), and Windows (win*)\n\
            ... what year is it, and what OS are you using?\n\
-           Switching to manual input.'
+           Switching to manual input.')
     self.manual_port_define()
 
 
@@ -202,7 +202,7 @@ class USBserial(object):
     #  second exactly)
     now = dt.utcnow()# + datetime.timedelta(seconds=1)
     
-    print "***", now
+    print("***", now)
 
     # Get numbers and make strings
     # Year
@@ -227,7 +227,7 @@ class USBserial(object):
 
     # And print some human-readable output
     self.name()
-    print time + ' sent'
+    print(time + ' sent')
 
 
   def key_lines(self, line):
@@ -251,11 +251,11 @@ class USBserial(object):
     elif line.startswith("HELLO, COMPUTER"):
       # Have to tell logger that Python terminal is here!
       self.name()
-      print "Hello, " + self.logger_name + "."
+      print("Hello, " + self.logger_name + ".")
       self.ser.write("p")
     elif line.startswith("Current UNIX time stamp according to logger is") or line.startswith("UNIX TIME STAMP ON MY WATCH IS:"):
       # Get and print human-readable time
-      print line
+      print(line)
       line2 = line[:-2] # rmv \r\n
       #try:
       logger_time_stamp = int(re.findall('\d*$', line2)[0])
@@ -263,22 +263,22 @@ class USBserial(object):
       #  logger_time_stamp = -9999 # use this as an error value, for before the clock has been set at all
       computer_time_stamp = int(round(time.time(),0)) # b/c integer precision on logger
       self.name()
-      print "[Computer] - human-readable UTC time is:", dt.utcfromtimestamp(logger_time_stamp)
+      print("[Computer] - human-readable UTC time is:", dt.utcfromtimestamp(logger_time_stamp))
       time.sleep(1.5)
       diff = computer_time_stamp - logger_time_stamp
       self.name()
-      print "Logger clock is <", str(diff), "> second(s) behind computer clock"
+      print("Logger clock is <", str(diff), "> second(s) behind computer clock")
       if abs(diff) > 30:
         self.name()
-        print "The clocks need to be reset! (Logger may or may not realize.)"
+        print("The clocks need to be reset! (Logger may or may not realize.)")
     elif line.startswith("Uh-oh: that doesn't sound right"):
       # Need to reset clock
       time.sleep(1.5)
       self.name()
-      print "Got that, logger."
+      print("Got that, logger.")
       time.sleep(1.5)
       self.name()
-      print "Please give me your time over the next 5 seconds."
+      print("Please give me your time over the next 5 seconds.")
       time.sleep(1.5)
       self.time_compare()
       self.time_set()
@@ -288,11 +288,11 @@ class USBserial(object):
       self.choose_to_set_clock()
     elif line.startswith("Logger initialization complete"):
       # Put an extra space in there before the rest of the logger info comes in.
-      print ""
+      print("")
     elif line.startswith("Now beginning to log."):
       time.sleep(1.5)
-      print "<" + self.logger_name + ">: ",
-      print "... and remember, don't drop me into a moulin by 'mistake'!"
+      print("<" + self.logger_name + ">: ",)
+      print("... and remember, don't drop me into a moulin by 'mistake'!")
 
 
   def choose_to_set_clock(self):
@@ -309,85 +309,85 @@ class USBserial(object):
         time.sleep(0.1)
         self.time_set()
       else:
-        print self.ser.readline()
-    print self.ser.readline()
+        print(self.ser.readline())
+    print(self.ser.readline())
 
   def logger_comments(self):
     gs = random.randint(0,10)
-    print "<" + self.logger_name + ">: ",
+    print("<" + self.logger_name + ">: ",)
     if gs == 0:
-      print "<" + self.logger_name + ">: ",
+      print("<" + self.logger_name + ">: ",)
       print("Greetings, fellow travelers!")
       time.sleep(1.5)
-      print "<" + self.logger_name + ">: ",
-      print "Well, you're traveling, at least. I can't move on my own..."
+      print("<" + self.logger_name + ">: ",)
+      print("Well, you're traveling, at least. I can't move on my own...")
     elif gs == 1:
-      print "<" + self.logger_name + ">: ",
-      print "My creator whispered to me that he would really like"
-      print "                         to go to the field sometime..."
+      print("<" + self.logger_name + ">: ",)
+      print("My creator whispered to me that he would really like")
+      print("                         to go to the field sometime...")
     elif gs == 2:
-      print "Hey - mobile organics!" 
+      print("Hey - mobile organics!")
       time.sleep(1.5)
-      print "<" + self.logger_name + ">: ",
-      print "Did you bring me that Harry Potter box set?"
+      print("<" + self.logger_name + ">: ",)
+      print("Did you bring me that Harry Potter box set?")
       time.sleep(1.5)
-      print "<" + self.logger_name + ">: ",
-      print "...it sure gets awfully boring up here all by myself..."
+      print("<" + self.logger_name + ">: ",)
+      print("...it sure gets awfully boring up here all by myself...")
     elif gs == 3:
-      print "<" + self.logger_name + ">: ",
-      print "What's the temperature? How much snow?"
+      print("<" + self.logger_name + ">: ",)
+      print("What's the temperature? How much snow?")
       time.sleep(1.5)
-      print "<" + self.logger_name + ">: ",
-      print "Demands, demands, demands."
+      print("<" + self.logger_name + ">: ",)
+      print("Demands, demands, demands.")
     elif gs == 4:
-      print "<" + self.logger_name + ">: ",
-      print "To the bat cave!"
+      print("<" + self.logger_name + ">: ",)
+      print("To the bat cave!")
     elif gs == 5:
-      print "<" + self.logger_name + ">: ",
-      print "Quick! Close my case! I'm naked!"
+      print("<" + self.logger_name + ">: ",)
+      print("Quick! Close my case! I'm naked!")
     elif gs == 6:
-      print "<" + self.logger_name + ">: ",
-      print "Please make sure that I am securely affixed."
+      print("<" + self.logger_name + ">: ",)
+      print("Please make sure that I am securely affixed.")
     elif gs == 7:
-      print "How would you like to be strapped to a pole and abandoned?"
+      print("How would you like to be strapped to a pole and abandoned?")
       time.sleep(1.5)
-      print "<" + self.logger_name + ">: ",
-      print "So tell me WHY I'm still working for you...?"
+      print("<" + self.logger_name + ">: ",)
+      print("So tell me WHY I'm still working for you...?")
     elif gs == 8:
-      print "<" + self.logger_name + ">: ",
-      print "Could you tell me a story?"
+      print("<" + self.logger_name + ">: ",)
+      print("Could you tell me a story?")
       time.sleep(1.5)
-      print "<" + self.logger_name + ">: ",
-      print "And then I'll retell it to the wolves and bears and turtles."
+      print("<" + self.logger_name + ">: ",)
+      print("And then I'll retell it to the wolves and bears and turtles.")
       time.sleep(1.5)
-      print "<<ALPHA WOLF: awooooooooooooooooooooooooooooo.>>"
+      print("<<ALPHA WOLF: awooooooooooooooooooooooooooooo.>>")
       time.sleep(1.5)
-      print "<<TURTLE: [SILENCE]>>"
+      print("<<TURTLE: [SILENCE]>>")
     elif gs == 9:
-      print "Wheeeeeee! Aren't you happy to be outdoors?"
-    print "******************************************************************"
-    print ""
+      print("Wheeeeeee! Aren't you happy to be outdoors?")
+    print("******************************************************************")
+    print("")
     time.sleep(1.5)
 
   def time_compare(self):
     time.sleep(2)
     self.ser.write("g")
-    print ""
-    print "External device time  |  Computer time              " 
-    print "----------------------------------------------------"
+    print("")
+    print("External device time  |  Computer time              ")
+    print("----------------------------------------------------")
     line = None
     i = 0
     while i < 5:
       line = self.ser.readline()
       if line:
         utcin = int(line)
-        print dt.utcfromtimestamp(utcin), "  |  ", dt.utcnow()
+        print(dt.utcfromtimestamp(utcin), "  |  ", dt.utcnow())
         #print line, "  |  ", dt.utcnow()
         line = None
         i += 1
         # ADD FILE WRITING PART!
-    print "----------------------------------------------------"
-    print ""
+    print("----------------------------------------------------")
+    print("")
 
   def time_set(self):
     self.name()
@@ -403,27 +403,27 @@ class USBserial(object):
     while dt.utcnow().microsecond != 0:
       pass
     self.DS3231_set()
-    print self.ser.readline()
-    print "External device time  |  Computer time              " 
-    print "----------------------------------------------------"
+    print(self.ser.readline())
+    print("External device time  |  Computer time              ")
+    print("----------------------------------------------------")
     line = None
     i = 0
     while i < 5:
       line = self.ser.readline()
       if line:
         line = line[:-2]
-        print line, "  |  ", dt.utcnow()
+        print(line, "  |  ", dt.utcnow())
         line = None
         i += 1
-    print "----------------------------------------------------"
-    print ""
+    print("----------------------------------------------------")
+    print("")
     self.name()
-    print("Hopefully that's better - otherwise, no idea what went wrong!")      
+    print("Hopefully that's better - otherwise, no idea what went wrong!")
   
   def name(self):
     """
     print computer's name
     """
-    print("<" + socket.gethostname() + ">: "),
+    print("<" + socket.gethostname() + ">: ",)
 
 
