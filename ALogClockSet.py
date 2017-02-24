@@ -1,5 +1,7 @@
 #! /usr/bin/python
 
+from __future__ import print_function
+
 """
 ALogClockSet.py: interactive front-end to usbserial.py to set the clock and
                  read incoming serial data with the ALog series of

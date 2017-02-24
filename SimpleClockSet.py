@@ -1,4 +1,5 @@
 #! /usr/bin/python
+from __future__ import print_function
 
 """
 SimpleClockSet.py: Connects with the "ALog_DS3231_set_echo" example script in

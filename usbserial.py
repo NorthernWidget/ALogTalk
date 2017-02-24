@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 """
 usberial.py: object-oriented much-easier-than-before interaction and clock-setting 
 with the ALog series of Arduino-based data loggers developed by Andrew D. Wickert
@@ -23,6 +25,8 @@ Andrew D. Wickert
 Northern Widget LLC
 andy@northernwidget.com
 """
+
+from __future__ import print_function
 
 import glob
 import sys
