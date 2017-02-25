@@ -38,6 +38,8 @@ import time
 from select import select
 import random
 
+from builtins import input
+
 class USBserial(object):
   import serial # Keep serial objects inside self
                 # THIS IS THE ONLY NON-STANDARD LIBRARY NEEDED
@@ -156,11 +158,11 @@ class USBserial(object):
     print('Follow the instructions to manually set  the port, or type "q" to quit.')
     print("")
     if sys.platform[:3] == 'win':
-      portnum = raw_input('Please type the COM port number (e.g., "3" for COM3) to which the\n\
+      portnum = input('Please type the COM port number (e.g., "3" for COM3) to which the\n\
                            Arduino-based device is attached.\n>>>COM: ')
       self.port = 'COM' + str(portnum) # Should already be string, but just in case
     else:
-      self.port = raw_input('Please type your serial port path (e.g., /dev/ttyUSB0).\n>>>Port path = ')
+      self.port = input('Please type your serial port path (e.g., /dev/ttyUSB0).\n>>>Port path = ')
       
     if self.port == 'q':
       sys.exit("\n\t>>> Could not find communications port. Ta ta!. <<<\n")
@@ -306,7 +308,7 @@ class USBserial(object):
     self.clock_set_choice = None
     while self.clock_set_choice != 'y' and self.clock_set_choice != 'Y' and self.clock_set_choice != 'n' and self.clock_set_choice != 'N':
       self.name();
-      self.clock_set_choice = raw_input("Set clock? y/n: ")
+      self.clock_set_choice = input("Set clock? y/n: ")
       self.ser.write(self.clock_set_choice)
       if self.clock_set_choice == 'y':
         # Send along time to set
